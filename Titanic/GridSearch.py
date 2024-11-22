@@ -18,6 +18,7 @@ def gridsearch_fun(X_train, X_test, y_train, y_test):
     import pickle
     import numpy as np
     import pandas as pd
+    import os
 
     # Defining the list of models to be tested on the trainig dataset.
     models_dict = {1: 'Logistic Regression', 2: 'Random Forest', 3: 'Support Vector Machine', 4: 'Support Vector Machine 2', 5: 'XGBoost'}
@@ -140,7 +141,14 @@ def gridsearch_fun(X_train, X_test, y_train, y_test):
         n_clean = n.replace(' ', '_')
         file_name = f'{n_clean}_GS_results.csv'
 
-        results.to_csv(file_name, index = False)
+        # Defining a directory in which to save the gridsearch results.
+
+        if not os.path.exists('GridSearch_Results'):
+            os.mkdir('GridSearch_Results')
+
+        grid_search_directory = 'GridSearch_Results'
+
+        results.to_csv(os.path.join(grid_search_directory,file_name), index = False)
 
 
     # Returning the final output from the gridsearch
